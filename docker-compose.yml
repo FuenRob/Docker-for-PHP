@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+    mysql:
+        image: mariadb
+        environment:
+            - MYSQL_DATABASE=nombre
+            - MYSQL_ROOT_PASSWORD=passwordroot
+            - MYSQL_USER=mysqluser
+            - MYSQL_PASSWORD=passworduser
+        volumes:
+            - ./volumenes/mysql:/var/lib/mysql
+        ports:
+            - 3306:3306
+    web:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        environment:
+            XDEBUG_CONFIG: remote_host=172.17.0.1 remote_port=9000 remote_enable=1
+        ports:
+            - '80:80'
+        volumes:
+            - './web:/var/www/html'
+        links: 
+            - mysql

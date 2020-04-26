@@ -1,17 +1,20 @@
-version: '3'
+version: '3.3'
 
 services:
-    mysql:
-        image: mariadb
+    db:
+        image: mysql:5.7.22
+        container_name: serverdb
+        command: --sql_mode=""
+        restart: always
         environment:
-            - MYSQL_DATABASE=nombre
-            - MYSQL_ROOT_PASSWORD=passwordroot
-            - MYSQL_USER=mysqluser
-            - MYSQL_PASSWORD=passworduser
-        volumes:
-            - ./volumenes/mysql:/var/lib/mysql
+            - MYSQL_DATABASE=prestashop
+            - MYSQL_ROOT_PASSWORD=root_password
+            - MYSQL_USER=prestashop
+            - MYSQL_PASSWORD=prestashop
         ports:
-            - 3306:3306
+            - "13306:3306"
+        volumes:
+            - "./data/db/mysql:/var/lib/mysql"
     web:
         build:
             context: .
@@ -22,5 +25,5 @@ services:
             - '80:80'
         volumes:
             - './web:/var/www/html'
-        links: 
-            - mysql
+        depends_on:
+            - db

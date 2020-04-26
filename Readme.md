@@ -13,4 +13,5 @@ This is the minimum you should have on your installed computer:
 
 ## Repository
 Separate docker-compose by branch for each platform.
-* Master: PHP without framework
+* master: PHP without framework
+* prestashop: Pre-install of Prestashop 1.7.6.5

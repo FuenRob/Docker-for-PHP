@@ -31,3 +31,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
         zip \
         sockets \
     && a2enmod rewrite
+
+RUN pecl install -f xdebug \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini;

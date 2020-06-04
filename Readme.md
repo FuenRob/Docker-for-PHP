@@ -5,12 +5,8 @@ This is the minimum you should have on your installed computer:
 * In my case, I have installed [visual studio code](https://code.visualstudio.com/)
 
 ## Services
-* MariaDB
+* MySql
 * Apache
 
 ## Features Standard
 * xDebug
-
-## Repository
-Separate docker-compose by branch for each platform.
-* Master: PHP without framework

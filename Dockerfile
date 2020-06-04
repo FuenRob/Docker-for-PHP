@@ -1,20 +1,33 @@
-FROM php:7.2-apache
+FROM php:7.4-apache
+LABEL maintainer="fuenrob@gmail.com"
 
-RUN pecl install -f xdebug \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini;
-
-RUN apt-get update && apt-get install -y \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    && docker-php-ext-install -j$(nproc) iconv \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install mysqli pdo pdo_mysql zip
-
+# Download script to install PHP extensions and dependencies
 ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
 
-RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions intl bcmath imagick memcached
+RUN chmod uga+x /usr/local/bin/install-php-extensions && sync
 
-RUN a2enmod rewrite
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
+        curl \
+        git \
+        zip unzip \
+    && install-php-extensions \
+        bcmath \
+        bz2 \
+        calendar \
+        exif \
+        gd \
+        intl \
+        ldap \
+        memcached \
+        mysqli \
+        opcache \
+        pdo_mysql \
+        pdo_pgsql \
+        pgsql \
+        redis \
+        soap \
+        xsl \
+        zip \
+        sockets \
+    && a2enmod rewrite

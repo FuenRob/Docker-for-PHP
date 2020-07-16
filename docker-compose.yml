@@ -20,6 +20,7 @@ services:
             XDEBUG_CONFIG: remote_host=172.17.0.1 remote_port=9000 remote_enable=1
         ports:
             - '80:80'
+            - "443:443"
         volumes:
             - './web:/var/www/html'
         links: 

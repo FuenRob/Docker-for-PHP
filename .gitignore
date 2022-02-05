@@ -2,3 +2,5 @@ volumenes/
 data/
 etc/
 .idea/
+.vscode/
+.DS_Store
